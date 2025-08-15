@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 
 const mysql = require('mysql2');
@@ -6,17 +8,19 @@ const app = express();
 
 const port = 3000;
 
-// Configuração insegura - credenciais expostas no código
+// Configuração segura usando variáveis de ambiente
 
 const connection = mysql.createConnection({
 
-host: 'localhost',
+host: process.env.DB_HOST,
 
-user: 'root',
+port: port ,
 
-password: 'minhaSenha123',
+user: process.env.DB_USER,
 
-database: 'meubanco'
+password: process.env.DB_PASSWORD,
+
+database: process.env.DB_NAME
 
 });
 
@@ -36,7 +40,7 @@ console.log('Conectado ao banco de dados!');
 
 app.get('/', (req, res) => {
 
-res.send('Aplicação com credenciais inseguras no código.');
+res.send('Aplicação segura usando variáveis de ambiente!');
 
 });
 
